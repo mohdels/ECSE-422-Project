@@ -1,7 +1,7 @@
 # ECSE422 Communication Network Designer
 
 ## Requirements
-Java  <br/>
+Java 8 and higher <br/>
 Terminal/Command line or IDE to compile and run the program. <br/>
 
 ## How to run program
