@@ -17,6 +17,13 @@ public class Graph {
         vertexMap.put(vertex, vertSet);
     }
 
+    public void clearEdges() {
+        connectedEdges.clear();
+        for (HashSet<Vertex> vertices : vertexMap.values()) {
+            vertices.clear();  // Clear all adjacency sets
+        }
+    }
+
     public void addEdge(Edge edge){
         connectedEdges.add(edge);
     }
