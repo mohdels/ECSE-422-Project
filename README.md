@@ -1,5 +1,10 @@
 # ECSE422 Communication Network Designer
 
+## Contributors
+Mohammed Elsayed, 261053266 <br/>
+Ayman Elsayed, 261053265 <br/>
+Roxanne Archambault, 261052406 <br/>
+
 ## Requirements
 Java 8 or higher <br/>
 Terminal/Command line or IDE to compile and run the program. <br/>
@@ -43,10 +48,7 @@ When relibaility is maximized, the network outputs a design with the number of e
 6-city with cost limit 65 <br/>
 ![6-city](/Images/6-city.png)
 
-## Contributors
-Mohammed Elsayed, 261053266 <br/>
-Ayman Elsayed, 261053265 <br/>
-Roxanne Archambault, 261052406 <br/>
+
 
 
 
