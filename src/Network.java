@@ -41,15 +41,10 @@ public class Network {
         createEdges(edgesKruskal, networkGraph);
         createEdges(edgesEE, networkGraphEE);
 
-        //System.out.println(totalReliabilityEE);
-        //System.out.println(totalCostEE);
-
         // sort by cost
         Comparator<Edge> costOrder = Comparator.comparing(Edge::getCost).thenComparing(Edge::getReliability, Comparator.reverseOrder());
         Collections.sort(edgesKruskal, costOrder);
 
-//        System.gc();
-//        Thread.sleep(1000);
         kruskalMST(networkGraph, edgesKruskal);
         long startTimeEE = System.nanoTime();
         exhaustiveEnumeration(networkGraphEE, edgesEE);
@@ -59,12 +54,6 @@ public class Network {
         for (int i = 0; i < 1000; i++) {
 
         }
-//        System.gc();
-//        Thread.sleep(750);
-        //long startTimeKruskal = System.nanoTime();
-
-        //long endTimeKruskal = System.nanoTime();
-        //durationKruskal = endTimeKruskal - startTimeKruskal;
 
         if (durationKruskal > 200000){
             if (numberOfCities == 4){
@@ -93,12 +82,9 @@ public class Network {
         spanningReliability = calculateSpanningTreeReliability(networkGraph);
         spanningCost = calculateSpanningTreeCost(networkGraph);
 
-        // TO DO MAKE SURE IF EDGE DOESNT INCREASE RELIABILITY, PICK A NEW ONE.
-
         double currentReliability = spanningReliability;
         int currentCost = spanningCost;
 
-        // meet target reliability
 
         double newReliability;
         int newCost;
@@ -118,7 +104,6 @@ public class Network {
             // only update with the first available low cost edge.
             updateGraph(networkGraph, additionalEdges.get(0));
 
-            // ENUMERATION
             ArrayList<Integer[]> combinationList = new ArrayList<>();
             findCombination(networkGraph, combinationList);
 
@@ -137,8 +122,6 @@ public class Network {
 
         }
 
-
-        //   System.out.println("MAXIMIZED RELIABILITY WITH COST CONSTRAINT");
         totalReliability = currentReliability;
         totalCost = currentCost;
         if (targetCost < totalCost) {
@@ -156,7 +139,6 @@ public class Network {
         for (int i = 0; i < numberOfCities; i++){
             networkGraph.addVertex(i);
         }
-        //System.out.println("GRAPH INITIALIZED WITH " + networkGraph.vertexMap.size() + " VERTICES");
     }
 
     public static void createEdges(ArrayList<Edge> edges, Graph networkGraph){
@@ -185,31 +167,25 @@ public class Network {
 
             while ((readLine = br.readLine()) != null){
                 if (!readLine.contains("#")){
-                    //System.out.println(readLine);
                     if (counter == 0){
-                        //  System.out.println("NUMBER OF CITIES READ");
                         numberOfCities = Integer.valueOf(readLine);
                         counter++;
                     } else if (counter == 1){
-                        //  System.out.println("RELIABILITY MAJOR MATRIX READ");
                         if (reliabilityLine.isEmpty()) {
                             reliabilityLine = reliabilityLine + readLine;
                         } else {
                             reliabilityLine = reliabilityLine + " " + readLine;
                         }
-                        //System.out.print(reliabilityLines);
                         reliabilityMatrixRowCounter++;
                         if (reliabilityMatrixRowCounter == numberOfCities - 1) {
                             String[] reliabilityValues = reliabilityLine.split(" ");
                             for (String value : reliabilityValues){
-                                //System.out.println(reliabilityLine);
                                 Double dnum = Double.valueOf(value);
                                 reliabilityMajorMatrix.add(dnum);
                             }
                             counter++;
                         }
                     } else if (counter == 2){
-                        //  System.out.println("COST MAJOR MATRIX READ");
                         if (costLine.isEmpty()) {
                             costLine = costLine + readLine;
                         } else {
@@ -217,7 +193,6 @@ public class Network {
                         }
                         costMatrixRowCounter++;
                         if (costMatrixRowCounter == numberOfCities - 1) {
-                            //System.out.println(costLine);
                             String[] costValues = costLine.split(" ");
                             for (String value : costValues){
                                 costMajorMatrix.add(Integer.valueOf(value));
@@ -305,7 +280,6 @@ public class Network {
             double currentReliability = 1;  // Assuming reliability multiplies
 
             for (int j = 0; j < allEdges; j++) {
-                //spanningTreeFound = false;
                 if ((i & (1 << j)) != 0) {  // Check if the j-th edge is included in the subset
                     Edge edge = edges.get(j);
                     subset.add(edge);
@@ -326,7 +300,6 @@ public class Network {
                 bestNetwork = new ArrayList<>(subset);
             }
         }
-        //System.out.print(counter);
         totalReliabilityEE = bestReliability;
         totalCostEE = bestCost;
 
@@ -336,7 +309,6 @@ public class Network {
             for (Edge edge : bestNetwork) {
                 networkGraph.addEdge(edge);  // Add each edge of the best network to the graph
             }
-            //displayGraphInformation(networkGraph);  // Optionally display the network information
         }
     }
 
@@ -362,7 +334,6 @@ public class Network {
     }
 
     public static void kruskalMST(Graph networkGraph, ArrayList<Edge> edges){
-        //System.out.println("----- SPANNING EDGES -----");
         long startTimeKruskal = System.nanoTime();
         for(Edge edge : edges){
             networkGraph.addEdge(edge);
@@ -371,8 +342,6 @@ public class Network {
                 if(hasCycle(networkGraph)){
                     removeNetworkEdge(networkGraph,edge);
                 } else {
-                    // System.out.println("ADDED EDGE SOURCE ID : " + (edge.source.getId() + 1) + " DEST ID : " + (edge.destination.getId() + 1) + " RELIABILITY : " + edge.reliability + " COST : " + edge.cost);
-                    // maximum number of edges of spanning tree done.
                     if (networkGraph.getNetworkEdges().size() == (networkGraph.vertexMap.keySet().size() - 1)) {
                         break;
                     }
@@ -426,7 +395,6 @@ public class Network {
             spanningTreeReliability *= edge.getReliability();
         }
 
-        // System.out.println("CURRENT TOTAL RELIABILITY : " + spanningTreeReliability);
         return spanningTreeReliability;
     }
 
@@ -435,8 +403,6 @@ public class Network {
         for(Edge edge : networkGraph.getNetworkEdges()){
             cost += edge.getCost();
         }
-
-        //System.out.println("CURRENT COST : " + cost);
         return cost;
 
     }
@@ -493,7 +459,6 @@ public class Network {
                         reliability *= (1 - networkGraph.getNetworkEdges().get(i).getReliability());
                     }
                 }
-                // System.out.println("Adding reliability " + reliability);
                 totalReliability += reliability;
             }
         }
@@ -507,7 +472,6 @@ public class Network {
             totalCost += edge.getCost();
         }
 
-        //  System.out.println("TOTAL cost : " + totalCost);
         return totalCost;
     }
 
@@ -525,8 +489,6 @@ public class Network {
         HashSet<Vertex> hs2 = networkGraph.vertexMap.get(edge.destination);
         hs2.add(destination);
         networkGraph.vertexMap.put(destination, hs2);
-
-        //   System.out.println("UPDATE : ADD EDGE SOURCE ID : " + (source.getId() + 1) + " DEST ID : " + (destination.getId() + 1) + " RELIABILITY : " + edge.getReliability() + " COST : " + edge.getCost());
 
         networkGraph.addEdge(edge);
     }
@@ -549,7 +511,6 @@ public class Network {
 
         for (boolean visited : visitedVertices){
             if (!visited){
-                //System.out.println("GRAPH NOT CONNECTED WITH THIS COMBINATION");
                 return false;
             }
         }
@@ -580,49 +541,33 @@ public class Network {
     public static void displayGraphInformationEE(){
         ArrayList<Edge> finalEdges = networkGraph.getNetworkEdges();
         System.out.println("----- NETWORK DESIGN - EXHAUSTIVE ENUMERATION -----");
-        //System.out.println("----- EDGES -----");
         System.out.println("Connected edges : ");
         for(Edge edge : finalEdges){
             System.out.println(" [" + (edge.source.getId() + 1) + ", " + (edge.destination.getId() + 1) + "]" + "  cost: " + edge.cost + "  reliability: " + edge.reliability);
         }
         System.out.println("NETWORK HAS TOTAL EDGE : " + networkGraph.getNetworkEdges().size());
-        //System.out.println("----- RELIABILITY -----");
-        //System.out.println("DESIGN SPANNING RELIABILITY : " + spanningReliability);
         System.out.println("DESIGN MAX RELIABILITY : " + totalReliability);
-        //System.out.println("----- COST -----");
-        //System.out.println("DESIGN SPANNING COST : " + spanningCost);
         System.out.println("DESIGN TARGET COST : " + targetCost);
         System.out.println("DESIGN OPTIMIZED COST : " + totalCost);
-        //System.out.println("-------------------------");
-        //System.out.println("Maximum reliability, given the cost constraint of " + targetCost + ", is at cost: " + totalCostEE);
         System.out.println("EXECUTION TIME IN NANOSECONDS: " + durationEE);
         System.out.println("----------------------------------------------------------------------------------------------------");
-        //System.exit(0);
     }
 
     public static void displayGraphInformationKruskal(){
         ArrayList<Edge> finalEdges = networkGraph.getNetworkEdges();
         System.out.println("----- NETWORK DESIGN - KRUSKAL'S -----");
-        //System.out.println("----- EDGES -----");
         System.out.println("Connected edges : ");
         for(Edge edge : finalEdges){
             System.out.println(" [" + (edge.source.getId() + 1) + ", " + (edge.destination.getId() + 1) + "]" + "  cost: " + edge.cost + "  reliability: " + edge.reliability);
         }
         System.out.println("NETWORK HAS TOTAL EDGE : " + networkGraph.getNetworkEdges().size());
-        //System.out.println("----- RELIABILITY -----");
-        //System.out.println("DESIGN SPANNING RELIABILITY : " + spanningReliability);
         System.out.println("DESIGN MAX RELIABILITY : " + totalReliability);
-        //System.out.println("----- COST -----");
-        //System.out.println("DESIGN SPANNING COST : " + spanningCost);
         System.out.println("DESIGN TARGET COST : " + targetCost);
         System.out.println("DESIGN OPTIMIZED COST : " + totalCost);
-        //System.out.println("-------------------------");
-        //System.out.println("Maximum reliability, given the cost constraint of " + targetCost + ", is at cost: " + totalCostKruskal);
         System.out.println("EXECUTION TIME IN NANOSECONDS: " + durationKruskal);
         System.out.println("----------------------------------------------------------------------------------------------------");
         System.out.println("EXECUTION TIME OF KRUSKAL'S ALGORITHM IS " + (float) durationEE/durationKruskal + " (" + durationEE + "/" + durationKruskal + ")" + " TIMES FASTER THAN EXHAUSTIVE ENUMERATION");
         System.out.println("----- END -----");
-        //System.exit(0);
     }
 }
 
