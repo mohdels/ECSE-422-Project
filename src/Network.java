@@ -55,29 +55,6 @@ public class Network {
 
         }
 
-        if (durationKruskal > 200000){
-            if (numberOfCities == 4){
-                Random random = new Random();
-                Random random2 = new Random();
-                durationEE = random.nextInt(423876 - 356374 + 1) + 356374;
-                durationKruskal = random2.nextInt(167393 - 118284 + 1) + 118284;
-            }
-
-            else if (numberOfCities == 5){
-                Random random = new Random();
-                Random random2 = new Random();
-                durationEE = random.nextInt(1376805 - 1093847 + 1) + 1093847;
-                durationKruskal = random2.nextInt(167393 - 118284 + 1) + 118284;
-            }
-
-            else if (numberOfCities == 6){
-                Random random = new Random();
-                Random random2 = new Random();
-                durationEE = random.nextInt(11376987 - 10257376 + 1) + 10257376;
-                durationKruskal = random2.nextInt(177393 - 118284 + 1) + 118284;
-            }
-
-        }
         amountOfSpanningEdges = networkGraph.getNetworkEdges().size();
         spanningReliability = calculateSpanningTreeReliability(networkGraph);
         spanningCost = calculateSpanningTreeCost(networkGraph);
