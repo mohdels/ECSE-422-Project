@@ -51,10 +51,6 @@ public class Network {
         long endTimeEE = System.nanoTime();
         durationEE = endTimeEE - startTimeEE;
 
-        for (int i = 0; i < 1000; i++) {
-
-        }
-
         amountOfSpanningEdges = networkGraph.getNetworkEdges().size();
         spanningReliability = calculateSpanningTreeReliability(networkGraph);
         spanningCost = calculateSpanningTreeCost(networkGraph);
