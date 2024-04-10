@@ -33,9 +33,9 @@ All possible network design choices are generated. The reliability and cost of e
 
 ### Method 2: Kruskal's Algorithm
 After parsing the edges, the edges are sorted based on cost. A spanning tree is produced using kruskal algorithm with the sorted edges.
-If the reliability of spanning tree can still be maximized without exceeding the cost limit, the spanning tree adds an edge with the lowest cost. The reliability and cost is recalculated with the edge in the network graph. If the reliability can further be maximized, keep adding additional edges until no more edges can be added. The reliability is calculated using exhaustive method.
+If the reliability of spanning tree can still be maximized without exceeding the cost limit, the spanning tree adds an edge with the lowest cost. The reliability and cost are recalculated with the edge in the network graph. If the reliability can further be maximized, keep adding additional edges until no more edges can be added. The reliability is calculated using exhaustive method.
 
-When relibaility is maximized, the network outputs a design with the number of edges and the link between each link for each method
+When reliability is maximized, the network outputs a design with the number of edges and the link between each link for each method
 
 ## Output
 
