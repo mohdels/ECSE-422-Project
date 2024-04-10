@@ -35,13 +35,13 @@ When relibaility is maximized, the network outputs a design with the number of e
 ## Output
 
 4-city with cost limit 50 <br/>
-![4-city](/Images/4-city.PNG)
+![4-city](/Images/4-city.png)
 
 5-city with cost limit 60 <br/>
-![5-city](/Images/5-city.PNG)
+![5-city](/Images/5-city.png)
 
 6-city with cost limit 65 <br/>
-![6-city](/Images/6-city.PNG)
+![6-city](/Images/6-city.png)
 
 
 
